@@ -1,7 +1,7 @@
 #ifndef BUFFER_H_
 #define BUFFER_H_
 
-#include "node.h"
+#include "simple_node.h"
 
 typedef struct buffer
 {
@@ -9,7 +9,7 @@ typedef struct buffer
     simple_node *last;
 } buffer;
 
-buffer *budder_create();
+buffer *buffer_create();
 
 void buffer_add_message(buffer *, void *, size_t);
 

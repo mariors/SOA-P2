@@ -4,9 +4,9 @@
 
 int main(int argc, char** argv){
     
-    buffer* buf = init_buffer();
+    //buffer* buf = buffer_create();
 
-    print("Main program!");
+    printf("Main program!");
     
     return 0;
 }

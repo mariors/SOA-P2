@@ -1,4 +1,4 @@
-#include "node.h"
+#include "simple_node.h"
 
 simple_node *node_create()
 {

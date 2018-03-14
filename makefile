@@ -1,20 +1,24 @@
 CC = gcc
 MK_DIR = mkdir
-HEADERS = -I/include
+HEADERS = -Iinclude/
 C_FLAGS = -Wall -lm -Os $(HEADERS)
 
 SRC_DIR = src
 BIN_DIR = bin
 
-MAIN_FILE = main.o
+MAIN_FILE = project.o
 
 SRC = $(wildcard $(SRC_DIR)/*.c)
-OBJ = $(patsubst %(SRC_DIR)/%.c,$(BIN_DIR)/%.o,$(SRC))
+OBJ = $(BIN_DIR)/$(MAIN_FILE)
 
-all: build
-	@echo Compilation done. Set args, if needed, in projects's "etc" folder and run: ./$(BIN_DIR)/$(MAIN_FILE)
-build: clean
+build: compile
+	@echo DONE!
+	@echo Compilation done. Set args, if needed, in projects\'s "etc" folder 
+	@echo and then run with: ./$(OBJ)
+compile: clean
+	@echo COMPILING...
 	$(MK_DIR) $(BIN_DIR)
 	$(CC) $(SRC) $(C_FLAGS) -o $(OBJ)
 clean:
-	$(RM) -f $(BIN_DIR)/*.o $(BIN_DIR)/*~
+	@echo CLEANING STEP!
+	$(RM) -rf $(BIN_DIR)/*.o $(BIN_DIR)

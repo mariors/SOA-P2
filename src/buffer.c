@@ -1,6 +1,6 @@
 #include "buffer.h"
 
-buffer *budder_create()
+buffer *buffer_create()
 {
     buffer *new_buffer = (buffer *)malloc(sizeof(buffer));
     new_buffer->first = NULL;
