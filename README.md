@@ -15,6 +15,10 @@
 #### Run:
 
 1. After compiling go to project's "bin" folder
+
+  ```console
+  $ cd bin 
+  ``` 
 2. Run the project by typing in terminal the following command
 
   ```console
