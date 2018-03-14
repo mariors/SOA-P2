@@ -3,17 +3,18 @@
 
 #include "node.h"
 
-typedef struct buffer {
-    simple_node* first;
-    simple_node* last;
+typedef struct buffer
+{
+    simple_node *first;
+    simple_node *last;
 } buffer;
 
-buffer* budder_create();
+buffer *budder_create();
 
-void buffer_add_message(const buffer*, void*, size_t);
+void buffer_add_message(buffer *, void *, size_t);
 
-void* buffer_retrieve_message(const buffer*);
+void *buffer_retrieve_message(buffer *);
 
-void buffer_destroy(buffer**);
+void buffer_destroy(buffer **);
 
 #endif
