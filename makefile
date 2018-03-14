@@ -1,7 +1,12 @@
 CC = gcc
 MK_DIR = mkdir
 HEADERS = -Iinclude/
-C_FLAGS = -Wall -lm -Os $(HEADERS)
+LIBS_FOLDER_FLAG = -Llib/
+LIBS_FLAG = 
+
+C_FLAGS = -Wall -lm -Os $(HEADERS) \
+	$(LIBS_FOLDER_FLAG) \
+	$(LIBS_FLAG)
 
 SRC_DIR = src
 BIN_DIR = bin

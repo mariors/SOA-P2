@@ -2,7 +2,7 @@
 
 simple_node *node_create()
 {
-    simple_node *new_node = malloc(sizeof(simple_node));
+    simple_node *new_node = (simple_node *)malloc(sizeof(simple_node));
     new_node->data = NULL;
     new_node->next = NULL;
     return new_node;
