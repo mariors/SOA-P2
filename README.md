@@ -15,7 +15,7 @@
 #### Run:
 
 1. After compiling go to project's "bin" folder
-2. Run the project by typing in terminal ./project.o
+2. Run the project by typing in terminal the following command
 
   ```console
   $ ./project.o 
