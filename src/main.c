@@ -1,13 +1,18 @@
 #include <stdio.h>
 
-#include "buffer.h"
+#include "global/global.h"
 
-int main(int argc, char **argv)
-{
+int main(int argc, char **argv){
+    const char * name = "MYSHM";
 
-    buffer *buf = buffer_create();
-
-    printf("Main program!");
+    GlobalState *global;
+    deleteGlobalState(name);
+    int r = getGlobalState(name,&global);
+    printf("Return %d\n",r);
+    //global->producer = 0;
+    //global->consumer = 0;
+    global->producer++;
+    printGlobalState(global);
 
     return 0;
 }

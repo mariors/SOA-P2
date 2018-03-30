@@ -4,7 +4,7 @@ HEADERS = -Iinclude/
 LIBS_FOLDER_FLAG = -Llib/
 LIBS_FLAG = 
 
-C_FLAGS = -Wall -lm -Os $(HEADERS) \
+C_FLAGS = -Wall -lm -Os -lrt $(HEADERS) \
 	$(LIBS_FOLDER_FLAG) \
 	$(LIBS_FLAG)
 
