@@ -4,6 +4,10 @@
 #include "share/share_base.h"
 
 
+void mapGlobalState(int fd, GlobalState **global){
+    *global = mmap(NULL, sizeof(GlobalState), PROT_READ|PROT_WRITE, MAP_SHARED, fd, 0);
+}
+
 int getGlobalState(const char *name, GlobalState **global){
     int fd = createShareMemory(name);
     printf("try to create share memory\n");
@@ -16,7 +20,14 @@ int getGlobalState(const char *name, GlobalState **global){
         }
     }
     printf("Socket: %d\n",fd);
-    *global = mmap(NULL, sizeof(GlobalState), PROT_READ|PROT_WRITE, MAP_SHARED, fd, 0);
+
+    mapGlobalState(fd,global);
+
+    //force to initialize if it is created for first time
+    if(fd!=ERROR_CREATE_SHARE_MEMORY){
+        (*global)->buffer = BufferDefault;
+    }
+    
     return 1;
 }
 
@@ -29,6 +40,7 @@ void printGlobalState(GlobalState *global){
     printf("Global State\n");
     printf("Producers: %d\n",global->producer);
     printf("Consumers: %d\n",global->consumer);
+    bufferPrintDetails(&global->buffer);
 }
 
 #endif

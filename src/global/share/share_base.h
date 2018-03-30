@@ -1,16 +1,15 @@
 #ifndef SHARE_BASE_H
 #define SHARE_BASE_H
 
-#include<stdio.h>
+#include "buffer/buffer_base.h"
 #include <sys/mman.h>
-#include <sys/types.h>
 #include <fcntl.h>
-#include <unistd.h>
-#include <semaphore.h>
+
 
 struct GlobalStateStruct{
     int producer;
     int consumer;
+    Buffer buffer;
 } GlobalStateDefault;
 
 typedef struct GlobalStateStruct GlobalState;

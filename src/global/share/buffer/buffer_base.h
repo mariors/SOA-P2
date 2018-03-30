@@ -6,7 +6,7 @@
 #define BUFFER_SIZE 10
 
 struct MessageStruct{
-	int value;
+	int id;
 };
 
 typedef struct MessageStruct Message;
@@ -27,8 +27,9 @@ struct BufferStruct{
 typedef struct BufferStruct Buffer;
 
 void bufferPrint(Buffer *pBuffer){
-		for (int i = 0; i < pBuffer->size; ++i){
-		printf("[%d]",pBuffer->index[i].value);
+	printf("Elementos: ");
+	for (int i = 0; i < pBuffer->size; ++i){
+		printf("[%d]",pBuffer->index[i].id);
 	}
 	printf("\n");
 }
@@ -69,11 +70,11 @@ int bufferPush(Buffer *pBuffer, Message element){
 Message bufferPop(Buffer *pBuffer){
 	if(bufferIsEmpty(pBuffer)){
 		Message error;
-		error.value = -1;
+		error.id = -1;
 		return error;
 	}
 	Message element = pBuffer->index[pBuffer->initial];
-	pBuffer->index[pBuffer->initial].value = 0;
+	pBuffer->index[pBuffer->initial].id = 0;
 	pBuffer->total--;
 	pBuffer->initial = (pBuffer->initial+1)%pBuffer->size;
 	return element;
