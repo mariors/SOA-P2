@@ -9,22 +9,25 @@ void mapGlobalState(int fd, GlobalState **global){
 }
 
 int getGlobalState(const char *name, GlobalState **global){
+    int create = 0;
     int fd = createShareMemory(name);
-    printf("try to create share memory\n");
+    //printf("try to create share memory\n");
     if(fd==ERROR_CREATE_SHARE_MEMORY) {
-        printf("error to create share memory\n");
-        printf("try to open share memory\n");
+        //printf("error to create share memory\n");
+        //printf("try to open share memory\n");
         fd = openShareMemory(name);
         if(fd==ERROR_OPEN_SHARE_MEMORY){
             return ERROR_IMPOSIBLE_CREATE_OPEN_SHARE_MEMORY;
         }
+    }else{
+        create=1;
     }
     printf("Socket: %d\n",fd);
 
     mapGlobalState(fd,global);
 
     //force to initialize if it is created for first time
-    if(fd!=ERROR_CREATE_SHARE_MEMORY){
+    if(create){
         (*global)->buffer = BufferDefault;
     }
     

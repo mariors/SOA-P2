@@ -5,10 +5,13 @@
 #include <sys/mman.h>
 #include <fcntl.h>
 
+typedef struct Integer{
+    int value;
+} Integer;
 
 struct GlobalStateStruct{
-    int producer;
-    int consumer;
+    Integer producer;
+    Integer consumer;
     Buffer buffer;
 } GlobalStateDefault;
 

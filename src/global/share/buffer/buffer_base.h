@@ -36,6 +36,7 @@ void bufferPrint(Buffer *pBuffer){
 
 
 void bufferPrintDetails(Buffer *pBuffer){
+	printf("Buffer\n");
 	printf("size: %d\n", pBuffer->size);
 	printf("initial: %d\n", pBuffer->initial);
 	printf("final: %d\n", pBuffer->final);
