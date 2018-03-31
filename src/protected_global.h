@@ -3,6 +3,19 @@
 
 #include "global/global.h"
 
+/*
+    const char * name = "MYSHM";
+
+    GlobalState *global;
+    //deleteGlobalStateProtected(name);
+    int r = getGlobalStateProtected(name,&global);
+    registerProducerProtected(global);
+    Message msg1;msg1.id = 1;
+    //bufferPushProtected(global,msg1);
+    bufferPopProtected(global);
+    printGlobalState(global);
+*/
+
 int getGlobalStateProtected(const char *name, GlobalState **global){
     return getGlobalState(name,global);
 }
