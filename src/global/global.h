@@ -35,7 +35,7 @@ int getGlobalState(const char *name, GlobalState **global){
 }
 
 void deleteGlobalState(const char *name){
-    printf("Deleting Global State\n");
+    //printf("Deleting Global State\n");
     deleteShareMemory(name);
 }
 
