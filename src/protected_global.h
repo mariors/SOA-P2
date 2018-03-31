@@ -28,11 +28,11 @@ void unregisterConsumerProtected(GlobalState *global){
 }
 
 int bufferPushProtected(GlobalState *global,Message element){
-    bufferPush(&global->buffer,element);
+    return bufferPush(&global->buffer,element);
 }
 
-int bufferPopProtected(GlobalState *global){
-    bufferPop(&global->buffer);
+Message bufferPopProtected(GlobalState *global){
+    return bufferPop(&global->buffer);
 }
 
 #endif
