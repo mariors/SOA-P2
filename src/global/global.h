@@ -41,8 +41,8 @@ void deleteGlobalState(const char *name){
 
 void printGlobalState(GlobalState *global){
     printf("Global State\n");
-    printf("Producers: %d\n",global->producer);
-    printf("Consumers: %d\n",global->consumer);
+    printf("Producers: %d\n",global->producer.total);
+    printf("Consumers: %d\n",global->consumer.total);
     bufferPrintDetails(&global->buffer);
 }
 

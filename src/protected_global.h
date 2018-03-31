@@ -3,19 +3,6 @@
 
 #include "global/global.h"
 
-/*
-    const char * name = "MYSHM";
-
-    GlobalState *global;
-    //deleteGlobalStateProtected(name);
-    int r = getGlobalStateProtected(name,&global);
-    registerProducerProtected(global);
-    Message msg1;msg1.id = 1;
-    //bufferPushProtected(global,msg1);
-    bufferPopProtected(global);
-    printGlobalState(global);
-*/
-
 int getGlobalStateProtected(const char *name, GlobalState **global){
     return getGlobalState(name,global);
 }
@@ -24,24 +11,20 @@ void deleteGlobalStateProtected(const char *name){
     deleteGlobalState(name);
 }
 
-void registerProducerProtected(GlobalState *global){
-    global->producer.value++;
+int registerProducerProtected(GlobalState *global){
+    return registerProducer(global);
 }
 
 void unregisterProducerProtected(GlobalState *global){
-    if(global->producer.value>0){
-        global->producer.value--;
-    }
+    unregisterProducer(global);
 }
 
-void registerConsumerProtected(GlobalState *global){
-    global->consumer.value++;
+int registerConsumerProtected(GlobalState *global){
+    return registerConsumer(global);
 }
 
 void unregisterConsumerProtected(GlobalState *global){
-    if(global->producer.value>0){
-        global->consumer.value--;
-    }
+    unregisterConsumer(global);
 }
 
 int bufferPushProtected(GlobalState *global,Message element){
@@ -53,3 +36,28 @@ int bufferPopProtected(GlobalState *global){
 }
 
 #endif
+
+
+/*
+    const char * name = "MYSHM";
+
+    GlobalState *global;
+    deleteGlobalStateProtected(name);
+    int r = getGlobalStateProtected(name,&global);
+    registerProducerProtected(global);
+    registerProducerProtected(global);
+    registerProducerProtected(global);
+    registerProducerProtected(global);
+    unregisterProducerProtected(global);
+    registerConsumerProtected(global);
+    registerConsumerProtected(global);
+    registerConsumerProtected(global);
+    unregisterConsumerProtected(global);
+    Message msg1;msg1.id = 1;
+    bufferPushProtected(global,msg1);
+    bufferPushProtected(global,msg1);
+    bufferPushProtected(global,msg1);
+    bufferPushProtected(global,msg1);
+    bufferPopProtected(global);
+    printGlobalState(global);
+*/

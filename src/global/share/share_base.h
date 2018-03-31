@@ -6,7 +6,8 @@
 #include <fcntl.h>
 
 typedef struct Integer{
-    int value;
+    int total;
+    int unique;
 } Integer;
 
 struct GlobalStateStruct{
@@ -45,6 +46,30 @@ int openShareMemory(const char *name){
 
 void deleteShareMemory(const char *name){
     shm_unlink(name);
+}
+
+int registerProducer(GlobalState *global){
+    global->producer.total++;
+    global->producer.unique++;
+    return global->producer.unique;
+}
+
+void unregisterProducer(GlobalState *global){
+    if(global->producer.total>0){
+        global->producer.total--;
+    }
+}
+
+int registerConsumer(GlobalState *global){
+    global->consumer.total++;
+    global->consumer.unique++;
+    return global->consumer.unique;
+}
+
+void unregisterConsumer(GlobalState *global){
+    if(global->consumer.value>0){
+        global->consumer.value--;
+    }
 }
 
 
