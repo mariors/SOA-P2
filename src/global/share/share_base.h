@@ -67,8 +67,8 @@ int registerConsumer(GlobalState *global){
 }
 
 void unregisterConsumer(GlobalState *global){
-    if(global->consumer.value>0){
-        global->consumer.value--;
+    if(global->consumer.total>0){
+        global->consumer.total--;
     }
 }
 

@@ -22,7 +22,7 @@ int getGlobalState(const char *name, GlobalState **global){
     }else{
         create=1;
     }
-    printf("Socket: %d\n",fd);
+    //printf("Socket: %d\n",fd);
 
     mapGlobalState(fd,global);
 
