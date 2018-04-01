@@ -31,6 +31,14 @@ int bufferPushProtected(GlobalState *global,Message element){
     return bufferPush(&global->buffer,element);
 }
 
+int bufferIsEmptyProtected(GlobalState *global){
+    return bufferIsEmpty(&global->buffer);
+}
+
+int bufferIsFullProtected(GlobalState *global){
+    return bufferIsFull(&global->buffer);
+}
+
 Message bufferPopProtected(GlobalState *global){
     return bufferPop(&global->buffer);
 }
