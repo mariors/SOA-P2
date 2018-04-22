@@ -22,56 +22,20 @@ typedef struct GlobalStateStruct GlobalState;
 #define ERROR_OPEN_SHARE_MEMORY -2
 #define ERROR_IMPOSIBLE_CREATE_OPEN_SHARE_MEMORY -3
 
-void fixMemoryToGlobalState(int fd){
-    ftruncate(fd, sizeof(GlobalState));
-}
+void fixMemoryToGlobalState(int fd);
 
-int createShareMemory(const char *name){
-    int fd = shm_open(name, O_RDWR|O_CREAT|O_EXCL, 0);
-    if(fd == -1) {
-        return ERROR_CREATE_SHARE_MEMORY;
-    }
-    fixMemoryToGlobalState(fd);
-    return fd;
-}
+int createShareMemory(const char *name);
 
-int openShareMemory(const char *name){
-    int fd = shm_open(name, O_RDWR|O_CREAT, 0);
-    if(fd == -1) {
-        return ERROR_OPEN_SHARE_MEMORY;
-    }
-    fixMemoryToGlobalState(fd);
-    return fd;
-}
+int openShareMemory(const char *name);
 
-void deleteShareMemory(const char *name){
-    shm_unlink(name);
-}
+void deleteShareMemory(const char *name);
 
-int registerProducer(GlobalState *global){
-    global->producer.total++;
-    global->producer.unique++;
-    return global->producer.unique;
-}
+int registerProducer(GlobalState *global);
 
-void unregisterProducer(GlobalState *global){
-    if(global->producer.total>0){
-        global->producer.total--;
-    }
-}
+void unregisterProducer(GlobalState *global);
 
-int registerConsumer(GlobalState *global){
-    global->consumer.total++;
-    global->consumer.unique++;
-    return global->consumer.unique;
-}
+int registerConsumer(GlobalState *global);
 
-void unregisterConsumer(GlobalState *global){
-    if(global->consumer.total>0){
-        global->consumer.total--;
-    }
-}
-
-
+void unregisterConsumer(GlobalState *global);
 
 #endif

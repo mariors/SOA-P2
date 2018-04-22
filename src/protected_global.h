@@ -1,49 +1,29 @@
-#ifndef PROTECTED_GLOBAL_H
-#define PROTECTED_GLOBAL_H
+//#ifndef PROTECTED_GLOBAL_H
+//#define PROTECTED_GLOBAL_H
 
 #include "global/global.h"
 
-int getGlobalStateProtected(const char *name, GlobalState **global){
-    return getGlobalState(name,global);
-}
+int getGlobalStateProtected(const char *name, GlobalState **global);
 
-void deleteGlobalStateProtected(const char *name){
-    deleteGlobalState(name);
-}
+void deleteGlobalStateProtected(const char *name);
+int registerProducerProtected(GlobalState *global);
 
-int registerProducerProtected(GlobalState *global){
-    return registerProducer(global);
-}
+void unregisterProducerProtected(GlobalState *global);
 
-void unregisterProducerProtected(GlobalState *global){
-    unregisterProducer(global);
-}
+int registerConsumerProtected(GlobalState *global);
 
-int registerConsumerProtected(GlobalState *global){
-    return registerConsumer(global);
-}
+void unregisterConsumerProtected(GlobalState *global);
 
-void unregisterConsumerProtected(GlobalState *global){
-    unregisterConsumer(global);
-}
+int bufferPushProtected(GlobalState *global,Message element);
 
-int bufferPushProtected(GlobalState *global,Message element){
-    return bufferPush(&global->buffer,element);
-}
+int bufferIsEmptyProtected(GlobalState *global);
 
-int bufferIsEmptyProtected(GlobalState *global){
-    return bufferIsEmpty(&global->buffer);
-}
+int bufferIsFullProtected(GlobalState *global);
 
-int bufferIsFullProtected(GlobalState *global){
-    return bufferIsFull(&global->buffer);
-}
+Message bufferPopProtected(GlobalState *global);
 
-Message bufferPopProtected(GlobalState *global){
-    return bufferPop(&global->buffer);
-}
-
-#endif
+//
+//#endif
 
 
 /*
