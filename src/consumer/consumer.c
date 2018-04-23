@@ -1,7 +1,6 @@
 #include <stdio.h>
 
-#include "protected_global.h"
-#include "global/procs/message_consumption.h"
+#include "../global/protected_global.h"
 
 int main(int argc, char **argv){
 	const char * name = "buffdir";
@@ -14,7 +13,7 @@ int main(int argc, char **argv){
 	printGlobalState(global);
 	printf("\n\n");
 
-	message_consumption_on_loop(global,lambda);
+	//message_consumption_on_loop(global,lambda);
 
 	printGlobalState(global);
 
