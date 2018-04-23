@@ -5,12 +5,11 @@
 #define WAIT_SECS 0.7
 
 int main(int argc, char** argv) {
-//	if(argc != 2){
-//		printf("ERROR: Provide the following arguments(buffer name)\n");
-//		return -1;
-//	}
+	if(argc != 2){
+		printf("ERROR: Provide the following arguments(buffer name)\n");
+		return -1;
+	}
 	const char * name = argv[1];
-//	const char * name = "buffdir";
 	GlobalState* global;
 	getGlobalStateProtected(name, &global);
 
