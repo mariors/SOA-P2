@@ -2,6 +2,7 @@
 #define PROTECTED_GLOBAL_H
 
 #include "global.h"
+#include <time.h>
 
 int getGlobalStateProtected(const char *name, GlobalState **global);
 

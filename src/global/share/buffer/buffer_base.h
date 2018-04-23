@@ -16,6 +16,14 @@ struct MessageStruct{
 
 typedef struct MessageStruct Message;
 
+struct ActionResponseStruct{
+	int idx;
+	Message m;
+	double time;
+};
+
+typedef struct ActionResponseStruct ActionResponse;
+
 typedef struct BufferStruct{
 	int size;
 	int initial;
