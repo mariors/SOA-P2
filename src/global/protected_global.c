@@ -1,5 +1,14 @@
 #include "protected_global.h"
 
+sem_t* getSemaphore(char* name){
+	sem_t *sem = sem_open(name,  O_RDWR);
+	if (sem == SEM_FAILED) {
+     perror("Failed to open semphore for empty");
+     exit(-1);
+	}
+	return sem;
+}
+
 
 int getGlobalStateProtected(const char *name, GlobalState **global){
 	return getGlobalState(name,global);
@@ -7,55 +16,66 @@ int getGlobalStateProtected(const char *name, GlobalState **global){
 
 void deleteGlobalStateProtected(const char *name){
 	deleteGlobalState(name);
+	sem_unlink("/semaphoreBuffer");
+	sem_unlink("/semaphoreConsumer");
+	sem_unlink("/semaphoreProducer");
 }
 
 int registerProducerProtected(GlobalState *global){
-	sem_t *sem = sem_open("/semaphore1112",  O_RDWR);
-	if (sem == SEM_FAILED) {
-     perror("Failed to open semphore for empty");
-     exit(-1);
-	}
+	sem_t *sem = getSemaphore("/semaphoreProducer");
 	sem_wait(sem);
 	int res = registerProducer(global);
 	sem_post(sem);
-	printf("Done\n");
-	//em_close(sem);
-	//sem_unlink("/semaphore");
 	return res;
 }
 
 void unregisterProducerProtected(GlobalState *global){
-	sem_wait(&global->mutex_producer);
+	sem_t *sem = getSemaphore("/semaphoreProducer");
+	sem_wait(sem);
 	unregisterProducer(global);
-	sem_post(&global->mutex_producer);
+	sem_post(sem);
 }
 
 int registerConsumerProtected(GlobalState *global){
-	sem_wait(&global->mutex_consumer);
+	sem_t *sem = getSemaphore("/semaphoreConsumer");
+	sem_wait(sem);
 	int res = registerConsumer(global);
-	sem_post(&global->mutex_consumer);
+	sem_post(sem);
 	return res;
 }
 
 void unregisterConsumerProtected(GlobalState *global){
-	sem_wait(&global->mutex_consumer);
+	sem_t *sem = getSemaphore("/semaphoreConsumer");
+	sem_wait(sem);
 	unregisterConsumer(global);
-	sem_post(&global->mutex_consumer);
-
+	sem_post(sem);
 }
 
 ActionResponse bufferPushProtected(GlobalState *global,Message element){
 
-	printf("before mutex\n");
 	time_t start;
 	time_t end;
 	start = time(NULL);
-	sem_wait(&global->buffer.mutex);
+	sem_t *sem = getSemaphore("/semaphoreBuffer");
+	sem_wait(sem);
 	end = time(NULL);
-	printf("inside mutex");
 	ActionResponse ar = bufferPush(&global->buffer,element);
-	sem_post(&global->buffer.mutex);
-	printf("after mutex");
+	sem_post(sem);
+	int seconds = end - start;
+	ar.time = seconds;
+	return ar;
+}
+
+ActionResponse bufferPopProtected(GlobalState *global){
+
+	time_t start;
+	time_t end;
+	start = time(NULL);
+	sem_t *sem = getSemaphore("/semaphoreBuffer");
+	sem_wait(sem);
+	end = time(NULL);
+	ActionResponse ar = bufferPop(&global->buffer);
+	sem_post(sem);
 	int seconds = end - start;
 	ar.time = seconds;
 	return ar;
@@ -69,26 +89,10 @@ int bufferIsFullProtected(GlobalState *global){
 	return bufferIsFull(&global->buffer);
 }
 
-ActionResponse bufferPopProtected(GlobalState *global){
-
-	time_t start;
-	time_t end;
-	start = time(NULL);
-	sem_wait(&global->buffer.mutex);
-	end = time(NULL);
-	ActionResponse ar = bufferPop(&global->buffer);
-	sem_post(&global->buffer.mutex);
-	int seconds = end - start;
-	ar.time = seconds;
-	return ar;
-}
-
 int setSystemStatus(GlobalState* global,status_code s){
-	//todo; semaphore
 	global->status = s;
 }
 
 int checkSystemAlive(GlobalState* global){
-	//todo; semaphore
 	return global->status == RUNNING;
 }

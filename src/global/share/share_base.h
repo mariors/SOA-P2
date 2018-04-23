@@ -10,14 +10,12 @@ typedef enum status_code {
 } status_code;
 
 typedef struct Integer{
-    int total;
-    int unique;
+    volatile int total;
+    volatile int unique;
 } Integer;
 
 struct GlobalStateStruct{
-    sem_t mutex_producer;
     Integer producer;
-    sem_t mutex_consumer;
     Integer consumer;
     Buffer buffer;
     status_code status;

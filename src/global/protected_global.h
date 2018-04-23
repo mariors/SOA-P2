@@ -4,6 +4,8 @@
 #include "global.h"
 #include <time.h>
 
+sem_t* getSemaphore(char* name);
+
 int getGlobalStateProtected(const char *name, GlobalState **global);
 
 void deleteGlobalStateProtected(const char *name);
