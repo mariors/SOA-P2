@@ -33,10 +33,7 @@ int main(int argc, char** argv) {
 		bufferPushProtected(global, killMessage);
 	}
 	printf("\n\n*****************\n");
-	printf("Finalizer: Done");
-	deleteGlobalStateProtected(name);
-	
-
+	printf("Finalizer: Done\n");
 
 	printf("Number of active producers at finalization time: %d\n", producers);
 	printf("Number of active consumers at finalization time: %d\n", consumers);
@@ -44,6 +41,6 @@ int main(int argc, char** argv) {
 	printf("Global state in the end: \n");
 	printGlobalState(global);
 	printf("*****************\n");
-
+	deleteGlobalStateProtected(name);
 	return 0;
 }
