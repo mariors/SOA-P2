@@ -31,6 +31,7 @@ SRC_PRODUCER = $(wildcard $(SRC_DIR)/consumer/consumer.c)
 
 SRC_CONSUMER = $(wildcard $(SRC_DIR)/producer/producer.c)
 
+SRC_FINALIZER = $(wildcard $(SRC_DIR)/finalizer/finalizer.c)
 
 SRC_TERMINATOR = $(wildcard $(SRC_DIR)/creator/creator.c)
 
@@ -48,6 +49,8 @@ consumer: consumer
 	$(CC) $(FULL_SRC) $(SRC_PRODUCER) $(C_FLAGS) -o bin/consumer.o
 producer: producer
 	$(CC) $(FULL_SRC) $(SRC_CONSUMER) $(C_FLAGS) -o bin/producer.o
+finalizer: finalizer
+	$(CC) $(FULL_SRC) $(SRC_FINALIZER) $(C_FLAGS) -o bin/finalizer.o
 clean:
 	@echo CLEANING STEP!
 	$(RM) -rf $(BIN_DIR)/*.o $(BIN_DIR)

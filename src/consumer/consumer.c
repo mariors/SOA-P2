@@ -12,7 +12,7 @@ void printAction(int pid, int internal_id, int idx, int producers, int consumers
 
 }
 
-void printShutdown(int pid, int internal_id, int msgs, double acc_waiting_time, double acc_blocked_time){
+void printShutdown(int pid, int internal_id, int msgs, int acc_waiting_time, int acc_blocked_time){
 
 	printf("\nConsumer PID: %d\nConsumer internal ID: %d\nTotal messages read: %d\nAccumulated time waiting: %d\nAccumulated time blocked: %d\n\nSHUTING DOWN...\n", pid, internal_id, msgs, acc_waiting_time, acc_blocked_time);
 
@@ -37,8 +37,8 @@ int main(int argc, char **argv){
 	int mod_5 = pid % 5;
 
 
-	double acc_waiting_time = 0;
-	double acc_blocked_time = 0;
+	int acc_waiting_time = 0;
+	int acc_blocked_time = 0;
 	int msgs = 0;
 
 	
@@ -62,16 +62,21 @@ int main(int argc, char **argv){
 	printf("CONSUMER: Entering to loop\n");
 
 
-	int read_idx = 0;
-
 	while(1){
 		acc_waiting_time += wait_on_exponential_dist(lambda);
 		printf("CONSUMER: Reading message from queue...\n");
-		Message m = bufferPopProtected(global);
-		printAction(pid, internal_id, read_idx, global->producer.total, global->consumer.total);
-		msgs++;
-		if(m.key == -1 || m.key == mod_5){
-			break;		
+		ActionResponse ar = bufferPopProtected(global);
+		acc_blocked_time += ar.time;
+		
+		if(ar.idx==-1){
+			printf("ERROR: Buffer is EMPTY, no elements to read\n");
+		}else{
+			Message m = ar.m;
+			printAction(pid, internal_id, ar.idx, global->producer.total, global->consumer.total);
+			msgs++;
+			if(m.key == -1 || m.key == mod_5){
+				break;		
+			}
 		}
 	}
 

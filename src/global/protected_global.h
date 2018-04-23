@@ -16,13 +16,17 @@ int registerConsumerProtected(GlobalState *global);
 
 void unregisterConsumerProtected(GlobalState *global);
 
-int bufferPushProtected(GlobalState *global,Message element);
+ActionResponse bufferPushProtected(GlobalState *global,Message element);
 
 int bufferIsEmptyProtected(GlobalState *global);
 
 int bufferIsFullProtected(GlobalState *global);
 
-Message bufferPopProtected(GlobalState *global);
+ActionResponse bufferPopProtected(GlobalState *global);
+
+int setSystemStatus(GlobalState *global, status_code s);
+
+int checkSystemAlive(GlobalState *global);
 
 
 #endif
