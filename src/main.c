@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#include "protected_global.h"
+#include "global/protected_global.h"
 
 int main(int argc, char **argv){
     const char * name = "MYSHM";

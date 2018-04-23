@@ -1,11 +1,12 @@
-//#ifndef PROTECTED_GLOBAL_H
-//#define PROTECTED_GLOBAL_H
+#ifndef PROTECTED_GLOBAL_H
+#define PROTECTED_GLOBAL_H
 
-#include "global/global.h"
+#include "global.h"
 
 int getGlobalStateProtected(const char *name, GlobalState **global);
 
 void deleteGlobalStateProtected(const char *name);
+
 int registerProducerProtected(GlobalState *global);
 
 void unregisterProducerProtected(GlobalState *global);
@@ -22,8 +23,8 @@ int bufferIsFullProtected(GlobalState *global);
 
 Message bufferPopProtected(GlobalState *global);
 
-//
-//#endif
+
+#endif
 
 
 /*

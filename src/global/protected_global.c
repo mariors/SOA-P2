@@ -1,6 +1,5 @@
-#include "global/global.h"
-
 #include "protected_global.h"
+
 
 int getGlobalStateProtected(const char *name, GlobalState **global){
 	return getGlobalState(name,global);

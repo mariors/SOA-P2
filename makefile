@@ -14,7 +14,26 @@ BIN_DIR = bin
 MAIN_FILE = project.o
 
 SRC = $(wildcard $(SRC_DIR)/*.c)
+SRC_GLOBAL = $(wildcard $(SRC_DIR)/global/*.c)
+SRC_GLOBAL1 = $(wildcard $(SRC_DIR)/global/**/*.c)
+SRC_GLOBAL2 = $(wildcard $(SRC_DIR)/global/**/**/*.c)
+
+FULL_SRC = $(SRC_GLOBAL) $(SRC_GLOBAL1) $(SRC_GLOBAL2)
+
 OBJ = $(BIN_DIR)/$(MAIN_FILE)
+
+
+SRC_CREATOR = $(wildcard $(SRC_DIR)/creator/creator.c)
+
+
+SRC_PRODUCER = $(wildcard $(SRC_DIR)/consumer/consumer.c)
+
+
+SRC_CONSUMER = $(wildcard $(SRC_DIR)/producer/producer.c)
+
+
+SRC_TERMINATOR = $(wildcard $(SRC_DIR)/creator/creator.c)
+
 
 build: compile
 	@echo DONE!
@@ -23,12 +42,12 @@ build: compile
 compile: clean
 	@echo COMPILING...
 	$(CC) $(SRC) $(C_FLAGS) -o $(OBJ)
-creator: src/creator.c
-	$(CC) $(wildcard $(SRC_DIR)/global/**/*.c) $(wildcard $(SRC_DIR)/global/**/**/*.c) src/global/*.c src/protected_global.c src/creator.c  $(C_FLAGS) -o bin/creator.o
-consumer: src/consumer.c
-	$(CC) $(wildcard $(SRC_DIR)/global/**/*.c) $(wildcard $(SRC_DIR)/global/**/**/*.c) src/global/*.c src/protected_global.c src/consumer.c  $(C_FLAGS) -o bin/consumer.o
-producer: src/producer.c
-	$(CC) $(wildcard $(SRC_DIR)/global/**/*.c) $(wildcard $(SRC_DIR)/global/**/**/*.c) src/global/*.c src/protected_global.c src/producer.c  $(C_FLAGS) -o bin/producer.o
+creator: creator
+	$(CC) $(FULL_SRC) $(SRC_CREATOR) $(C_FLAGS) -o bin/creator.o
+consumer: consumer
+	$(CC) $(FULL_SRC) $(SRC_PRODUCER) $(C_FLAGS) -o bin/consumer.o
+producer: producer
+	$(CC) $(FULL_SRC) $(SRC_CONSUMER) $(C_FLAGS) -o bin/producer.o
 clean:
 	@echo CLEANING STEP!
 	$(RM) -rf $(BIN_DIR)/*.o $(BIN_DIR)

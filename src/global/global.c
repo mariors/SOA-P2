@@ -1,11 +1,9 @@
+#include "global.h"
 #include "share/share_base.h"
 #include "share/buffer/buffer_base.h"
 
 #include <stdlib.h>
 #include <stdio.h>
-
-#include "global.h"
-
 
 
 void mapGlobalState(int fd, GlobalState **global){
