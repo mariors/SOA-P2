@@ -28,10 +28,11 @@ void unregisterConsumerProtected(GlobalState *global){
 
 int bufferPushProtected(GlobalState *global,Message element){
 	printf("before mutex\n");
-	sem_wait(global->buffer.mutex);
-	printf("after mutex");
+	sem_wait(&global->buffer.mutex);
+	printf("inside mutex");
 	int res = bufferPush(&global->buffer,element);
-	sem_post(global->buffer.mutex);
+	sem_post(&global->buffer.mutex);
+	printf("after mutex");
 	return res;
 }
 
@@ -44,8 +45,8 @@ int bufferIsFullProtected(GlobalState *global){
 }
 
 Message bufferPopProtected(GlobalState *global){
-	sem_wait(global->buffer.mutex);
+	sem_wait(&global->buffer.mutex);
 	Message res = bufferPop(&global->buffer);
-	sem_post(global->buffer.mutex);
+	sem_post(&global->buffer.mutex);
 	return res;
 }

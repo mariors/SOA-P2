@@ -19,7 +19,7 @@ typedef struct BufferStruct{
 	int initial;
 	int final;
 	int total;
-	sem_t* mutex;
+	sem_t mutex;
 	Message index[BUFFER_SIZE];
 
 } Buffer;
