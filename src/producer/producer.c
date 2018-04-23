@@ -1,8 +1,6 @@
 #include <stdio.h>
 
-//#include "global/procs/message_creation.h"
-#include "protected_global.h"
-#include "global/procs/message_creation.h"
+#include "../global/protected_global.h"
 
 
 int main(int argc, char **argv){
@@ -13,7 +11,7 @@ int main(int argc, char **argv){
 	getGlobalStateProtected(name, &global);
 	printGlobalState(global);
 
-	message_creation_loop(global, lambda);
+	//message_creation_loop(global, lambda);
 
 	return 0;
 }
