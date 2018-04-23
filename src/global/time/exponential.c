@@ -26,3 +26,8 @@ double wait_on_exponential_dist(double lambda) {
 	
     return s;
 }
+
+double wait_arbitrary_secs(int s){
+    nanosleep(&(struct timespec){.tv_sec=s,.tv_nsec=0},NULL);
+    return s;
+}

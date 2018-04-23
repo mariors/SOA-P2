@@ -23,6 +23,10 @@ int bufferIsFullProtected(GlobalState *global);
 
 Message bufferPopProtected(GlobalState *global);
 
+int setSystemStatus(GlobalState *global, status_code s);
+
+int checkSystemAlive(GlobalState *global);
+
 
 #endif
 

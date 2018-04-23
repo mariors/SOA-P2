@@ -5,6 +5,10 @@
 #include <sys/mman.h>
 #include <fcntl.h>
 
+typedef enum status_code {
+	RUNNING, DEAD
+} status_code;
+
 typedef struct Integer{
     int total;
     int unique;
@@ -14,6 +18,7 @@ struct GlobalStateStruct{
     Integer producer;
     Integer consumer;
     Buffer buffer;
+    status_code status;
 } GlobalStateDefault;
 
 typedef struct GlobalStateStruct GlobalState;

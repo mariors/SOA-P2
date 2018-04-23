@@ -63,6 +63,9 @@ int main(int argc, char **argv){
 		int read_idx = 0;
 
 		while(1){
+			if(!checkSystemAlive(global)){
+				break;
+			}
 			acc_waiting_time += wait_on_exponential_dist(lambda);
 			Message m = createNewMessage(uid,random_element());
 			printf("PRODUCER: Pushing message to queue...\n");

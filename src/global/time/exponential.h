@@ -7,5 +7,5 @@
 
 double sample_exponential(double lambda);
 double wait_on_exponential_dist(double lambda);
-
+double wait_arbitrary_secs(int s);
 #endif
