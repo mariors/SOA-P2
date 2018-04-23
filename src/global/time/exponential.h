@@ -6,6 +6,6 @@
 #define EXPONENTIAL_H
 
 double sample_exponential(double lambda);
-void wait_on_exponential_dist(double lambda);
+double wait_on_exponential_dist(double lambda);
 
 #endif
