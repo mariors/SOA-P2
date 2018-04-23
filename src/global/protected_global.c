@@ -10,13 +10,18 @@ void deleteGlobalStateProtected(const char *name){
 }
 
 int registerProducerProtected(GlobalState *global){
-	//printf("Register");
-	sem_t *sem = sem_open("/semaphore", 0);
+	sem_t *sem = sem_open("/semaphore",  O_RDWR);
+	if (sem == SEM_FAILED) {
+     perror("Failed to open semphore for empty");
+     exit(-1);
+	}
+	printf("Register");
 	sem_wait(sem);
-	//printf("Registering");
+	printf("Registering");
 	int res = registerProducer(global);
 	sem_post(sem);
-	//printf("Done");
+	printf("Done");
+	sem_close(sem);
 	return res;
 }
 

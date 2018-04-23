@@ -14,8 +14,8 @@ int main(int argc, char **argv){
 	int a = rand();
 	int i = 1000000;
 	while(i--){
-		if(i%1000)
-			printf("Thread %d iter %d\n",a,1000000 - i);
+		if(i%10000)
+			printf("Register\n");
 		registerProducerProtected(global);
 	}
 	//unregisterProducerProtected(global);

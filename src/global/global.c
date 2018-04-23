@@ -38,10 +38,17 @@ int getGlobalState(const char *name, GlobalState **global){
 		};
 		(*global)->buffer = BufferDefault;
 		//(*global)->buffer.mutex = (sem_t*)sem_open("/mutex",S_IRWXU|S_IRWXG|S_IRWXO,1);
+		(*global)->producer.total = 0;
+		(*global)->producer.unique = 0;
 		sem_init(&((*global)->buffer.mutex), 0, 1);
 		sem_init(&((*global)->mutex_consumer), 0, 1);
 		sem_init(&((*global)->mutex_producer), 0, 1);
-		sem_t *sem = sem_open("/semaphore", O_CREAT, 0644, 0);
+		//sem_unlink("/semaphore");
+		sem_t *sem = sem_open("/semaphore", O_RDWR | O_CREAT , S_IRUSR | S_IWUSR, 0);
+		if (sem == SEM_FAILED) {
+			perror("Failed to open semphore for empty");
+			exit(-1);
+		}
 	}
 
 	return 1;
