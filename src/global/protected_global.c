@@ -10,7 +10,7 @@ void deleteGlobalStateProtected(const char *name){
 }
 
 int registerProducerProtected(GlobalState *global){
-	sem_t *sem = sem_open("/semaphore",  O_RDWR);
+	sem_t *sem = sem_open("/semaphore1112",  O_RDWR);
 	if (sem == SEM_FAILED) {
      perror("Failed to open semphore for empty");
      exit(-1);
