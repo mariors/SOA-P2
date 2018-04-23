@@ -29,6 +29,7 @@ int main(int argc, char **argv){
 	int g = getGlobalStateProtected(name, &global);
 	if(g==ERROR_IMPOSIBLE_CREATE_OPEN_SHARE_MEMORY){
 		printf("ERROR: Imposible to Create or Open the Share Memory\n");
+		return -1;
 	}else{
 		printf("PRODUCER:GlobalState Open\n");
 		printGlobalState(global);
