@@ -38,7 +38,21 @@ int getGlobalState(const char *name, GlobalState **global){
 		};
 		(*global)->buffer = BufferDefault;
 		//(*global)->buffer.mutex = (sem_t*)sem_open("/mutex",S_IRWXU|S_IRWXG|S_IRWXO,1);
-		sem_init(&(*global)->buffer.mutex, 0, 1);
+		(*global)->producer.total = 0;
+		(*global)->producer.unique = 0;
+		sem_init(&((*global)->buffer.mutex), 0, 1);
+		sem_init(&((*global)->mutex_consumer), 0, 1);
+		sem_init(&((*global)->mutex_producer), 0, 1);
+		
+		sem_t *sem = sem_open("/semaphore1112", O_RDWR | O_CREAT , S_IRUSR | S_IWUSR, 1); 	
+		int* val = malloc(sizeof(int)); 		
+		sem_getvalue(sem, val); 		
+		printf("Created semaphore with value: %d\n", *val);
+
+		//sem_init(sem, 0, 1);
+
+		//sem_unlink("/semaphore");
+
 	}
 
 	return 1;

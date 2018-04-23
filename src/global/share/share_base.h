@@ -15,7 +15,9 @@ typedef struct Integer{
 } Integer;
 
 struct GlobalStateStruct{
+    sem_t mutex_producer;
     Integer producer;
+    sem_t mutex_consumer;
     Integer consumer;
     Buffer buffer;
     status_code status;
