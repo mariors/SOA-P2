@@ -22,17 +22,14 @@ build: compile
 	@echo and then run with: ./$(OBJ)
 compile: clean
 	@echo COMPILING...
-	$(MK_DIR) $(BIN_DIR)
 	$(CC) $(SRC) $(C_FLAGS) -o $(OBJ)
 creator: src/creator.c
-	$(MK_DIR) $(BIN_DIR)
 	$(CC) $(wildcard $(SRC_DIR)/global/**/*.c) $(wildcard $(SRC_DIR)/global/**/**/*.c) src/global/*.c src/protected_global.c src/creator.c  $(C_FLAGS) -o bin/creator.o
 consumer: src/consumer.c
-	$(MK_DIR) $(BIN_DIR)
 	$(CC) $(wildcard $(SRC_DIR)/global/**/*.c) $(wildcard $(SRC_DIR)/global/**/**/*.c) src/global/*.c src/protected_global.c src/consumer.c  $(C_FLAGS) -o bin/consumer.o
 producer: src/producer.c
-	$(MK_DIR) $(BIN_DIR)
 	$(CC) $(wildcard $(SRC_DIR)/global/**/*.c) $(wildcard $(SRC_DIR)/global/**/**/*.c) src/global/*.c src/protected_global.c src/producer.c  $(C_FLAGS) -o bin/producer.o
 clean:
 	@echo CLEANING STEP!
 	$(RM) -rf $(BIN_DIR)/*.o $(BIN_DIR)
+	$(MK_DIR) $(BIN_DIR)
