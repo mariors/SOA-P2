@@ -2,7 +2,7 @@
 // Created by aleph on 4/21/18.
 //
 
-#include "../global.h"
+#include "../../protected_global.h"
 #include "../time/exponential.h"
 #include <time.h>
 #include <stdio.h>
@@ -17,7 +17,7 @@ void message_creation_loop(GlobalState* global,double lambda){
 		wait_on_exponential_dist(lambda);
 		Message m = {random_element()};
 		printf("Producer: Pushing message to queue: %d\n", m.id);
-		bufferPush(&global->buffer,m);
+		bufferPushProtected(global,m);
 		printGlobalState(global);
 	}
 }

@@ -4,7 +4,7 @@ HEADERS = -Iinclude/
 LIBS_FOLDER_FLAG = -Llib/
 LIBS_FLAG = 
 
-C_FLAGS = -Wall -lm -Os -lrt $(HEADERS) \
+C_FLAGS = -Wall -lm -Os -lrt -pthread $(HEADERS) \
 	$(LIBS_FOLDER_FLAG) \
 	$(LIBS_FLAG)
 
@@ -22,7 +22,6 @@ build: compile
 	@echo and then run with: ./$(OBJ)
 compile: clean
 	@echo COMPILING...
-	$(MK_DIR) $(BIN_DIR)
 	$(CC) $(SRC) $(C_FLAGS) -o $(OBJ)
 creator: src/creator.c
 	$(CC) $(wildcard $(SRC_DIR)/global/**/*.c) $(wildcard $(SRC_DIR)/global/**/**/*.c) src/global/*.c src/protected_global.c src/creator.c  $(C_FLAGS) -o bin/creator.o
@@ -33,3 +32,4 @@ producer: src/producer.c
 clean:
 	@echo CLEANING STEP!
 	$(RM) -rf $(BIN_DIR)/*.o $(BIN_DIR)
+	$(MK_DIR) $(BIN_DIR)
