@@ -15,13 +15,12 @@ int registerProducerProtected(GlobalState *global){
      perror("Failed to open semphore for empty");
      exit(-1);
 	}
-	printf("Register");
 	sem_wait(sem);
-	printf("Registering");
 	int res = registerProducer(global);
 	sem_post(sem);
-	printf("Done");
-	sem_close(sem);
+	printf("Done\n");
+	//em_close(sem);
+	//sem_unlink("/semaphore");
 	return res;
 }
 

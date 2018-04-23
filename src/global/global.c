@@ -43,12 +43,15 @@ int getGlobalState(const char *name, GlobalState **global){
 		sem_init(&((*global)->buffer.mutex), 0, 1);
 		sem_init(&((*global)->mutex_consumer), 0, 1);
 		sem_init(&((*global)->mutex_producer), 0, 1);
-		//sem_unlink("/semaphore");
 		sem_t *sem = sem_open("/semaphore", O_RDWR | O_CREAT , S_IRUSR | S_IWUSR, 0);
 		if (sem == SEM_FAILED) {
 			perror("Failed to open semphore for empty");
 			exit(-1);
 		}
+		sem_init(sem, 0, 1);
+
+		//sem_unlink("/semaphore");
+
 	}
 
 	return 1;
