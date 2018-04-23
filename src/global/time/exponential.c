@@ -16,7 +16,7 @@ double sample_exponential(double lambda) {
 }
 
 
-double wait_on_exponential_dist(double lambda) {
+int wait_on_exponential_dist(double lambda) {
     double s = sample_exponential(lambda);
     int abs_s = (int) s;
     int abs_nsec = (int)(s - abs_s)*10E9;
@@ -24,7 +24,7 @@ double wait_on_exponential_dist(double lambda) {
 
     nanosleep(&(struct timespec){.tv_sec=abs_s,.tv_nsec=abs_nsec},NULL);
 	
-    return s;
+    return abs_s;
 }
 
 double wait_arbitrary_secs(int s){

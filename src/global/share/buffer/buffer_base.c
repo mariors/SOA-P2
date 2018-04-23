@@ -38,27 +38,32 @@ int bufferIsFull(Buffer *pBuffer){
 	return 0;
 }
 
-int bufferPush(Buffer *pBuffer, Message element){
+ActionResponse bufferPush(Buffer *pBuffer, Message element){
 	if(bufferIsFull(pBuffer)){
-		return -1;
+		ActionResponse ar;
+		ar.idx = -1;
+		return ar;
 	}
 	pBuffer->index[pBuffer->final] = element;
+	ActionResponse ar;
+	ar.idx = pBuffer->final;
 	pBuffer->total++;
 	pBuffer->final = (pBuffer->final+1)%pBuffer->size;
-	return 1;
+	return ar;
 }
 
-Message bufferPop(Buffer *pBuffer){
+ActionResponse bufferPop(Buffer *pBuffer){
 	if(bufferIsEmpty(pBuffer)){
-		Message error;
-		error.id = -1;
-		return error;
+		ActionResponse ar;
+		ar.idx = -1;
+		return ar;
 	}
 	Message element = pBuffer->index[pBuffer->initial];
+	ActionResponse ar = createNewActionResponse(pBuffer->initial, element);
 	pBuffer->index[pBuffer->initial].id = 0;
 	pBuffer->total--;
 	pBuffer->initial = (pBuffer->initial+1)%pBuffer->size;
-	return element;
+	return ar;
 }
 
 
@@ -73,6 +78,16 @@ Message createNewMessage(int id, int key){
 	strncpy(msg1.time,time_str,strlen(time_str)-1);
 	
 	return msg1;
+}
+
+ActionResponse createNewActionResponse(int idx, Message message){
+
+	ActionResponse ar;
+	ar.idx = idx;
+	ar.m = message;
+
+	return ar;
+
 }
 
 void printMessage(Message message){

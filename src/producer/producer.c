@@ -18,7 +18,7 @@ void printAction(int pid, int internal_id, int idx, int producers, int consumers
 
 }
 
-void printShutdown(int pid, int internal_id, int msgs, double acc_waiting_time, double acc_blocked_time){
+void printShutdown(int pid, int internal_id, int msgs, int acc_waiting_time, int acc_blocked_time){
 
 	printf("\nProducer PID: %d\nProducer internal ID: %d\nTotal messages read: %d\nAccumulated time waiting: %d\nAccumulated time blocked: %d\n\nSHUTING DOWN...\n", pid, internal_id, msgs, acc_waiting_time, acc_blocked_time);
 
@@ -35,8 +35,8 @@ int main(int argc, char **argv){
 
 	int pid = getpid();
 
-	double acc_waiting_time = 0;
-	double acc_blocked_time = 0;
+	int acc_waiting_time = 0;
+	int acc_blocked_time = 0;
 	int msgs = 0;
 
 	printf("PRODUCER: Iniciando\n");
@@ -60,8 +60,6 @@ int main(int argc, char **argv){
 
 		printf("PRODUCER: Entering to loop\n");
 
-		int read_idx = 0;
-
 		while(1){
 			if(!checkSystemAlive(global)){
 				break;
@@ -70,13 +68,14 @@ int main(int argc, char **argv){
 			Message m = createNewMessage(uid,random_element());
 			printf("PRODUCER: Pushing message to queue...\n");
 			printMessage(m);
-			int p = bufferPushProtected(global,m);
-			if(p==-1){
+			ActionResponse ar = bufferPushProtected(global,m);
+			acc_blocked_time =+ ar.time;
+			if(ar.idx==-1){
 				printf("ERROR: Buffer is FULL imposible to insert new element\n");
 			}else{
 				msgs++;
+				printAction(pid, uid, ar.idx, global->producer.total, global->consumer.total);
 			}
-			printAction(pid, uid, read_idx, global->producer.total, global->consumer.total);
 		}
 
 		printf("*** UNREGISTERING PRODUCER TO SHARED BUFFER ON %s *** \n", name);

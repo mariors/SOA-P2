@@ -16,6 +16,14 @@ struct MessageStruct{
 
 typedef struct MessageStruct Message;
 
+struct ActionResponseStruct{
+	int idx;
+	Message m;
+	int time;
+};
+
+typedef struct ActionResponseStruct ActionResponse;
+
 typedef struct BufferStruct{
 	int size;
 	int initial;
@@ -28,6 +36,8 @@ typedef struct BufferStruct{
 
 Message createNewMessage(int id, int key);
 
+ActionResponse createNewActionResponse(int idx, Message message);
+
 void printMessage(Message message);
 
 void bufferPrint(Buffer *pBuffer);
@@ -38,8 +48,8 @@ int bufferIsEmpty(Buffer *pBuffer);
 
 int bufferIsFull(Buffer *pBuffer);
 
-int bufferPush(Buffer *pBuffer, Message element);
+ActionResponse bufferPush(Buffer *pBuffer, Message element);
 
-Message bufferPop(Buffer *pBuffer);
+ActionResponse bufferPop(Buffer *pBuffer);
 
 #endif

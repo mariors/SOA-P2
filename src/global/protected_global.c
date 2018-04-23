@@ -25,14 +25,21 @@ void unregisterConsumerProtected(GlobalState *global){
 	unregisterConsumer(global);
 }
 
-int bufferPushProtected(GlobalState *global,Message element){
-//	printf("before mutex\n");
-//	sem_wait(&global->buffer.mutex);
-//	printf("inside mutex");
-	int res = bufferPush(&global->buffer,element);
-//	sem_post(&global->buffer.mutex);
-//	printf("after mutex");
-	return res;
+ActionResponse bufferPushProtected(GlobalState *global,Message element){
+
+	printf("before mutex\n");
+	time_t start;
+	time_t end;
+	start = time(NULL);
+	sem_wait(&global->buffer.mutex);
+	end = time(NULL);
+	printf("inside mutex");
+	ActionResponse ar = bufferPush(&global->buffer,element);
+	sem_post(&global->buffer.mutex);
+	printf("after mutex");
+	int seconds = end - start;
+	ar.time = seconds;
+	return ar;
 }
 
 int bufferIsEmptyProtected(GlobalState *global){
@@ -43,11 +50,18 @@ int bufferIsFullProtected(GlobalState *global){
 	return bufferIsFull(&global->buffer);
 }
 
-Message bufferPopProtected(GlobalState *global){
-//	sem_wait(&global->buffer.mutex);
-	Message res = bufferPop(&global->buffer);
-//	sem_post(&global->buffer.mutex);
-	return res;
+ActionResponse bufferPopProtected(GlobalState *global){
+
+	time_t start;
+	time_t end;
+	start = time(NULL);
+	sem_wait(&global->buffer.mutex);
+	end = time(NULL);
+	ActionResponse ar = bufferPop(&global->buffer);
+	sem_post(&global->buffer.mutex);
+	int seconds = end - start;
+	ar.time = seconds;
+	return ar;
 }
 
 int setSystemStatus(GlobalState* global,status_code s){

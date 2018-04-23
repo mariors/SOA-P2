@@ -2,6 +2,7 @@
 #define PROTECTED_GLOBAL_H
 
 #include "global.h"
+#include <time.h>
 
 int getGlobalStateProtected(const char *name, GlobalState **global);
 
@@ -15,13 +16,13 @@ int registerConsumerProtected(GlobalState *global);
 
 void unregisterConsumerProtected(GlobalState *global);
 
-int bufferPushProtected(GlobalState *global,Message element);
+ActionResponse bufferPushProtected(GlobalState *global,Message element);
 
 int bufferIsEmptyProtected(GlobalState *global);
 
 int bufferIsFullProtected(GlobalState *global);
 
-Message bufferPopProtected(GlobalState *global);
+ActionResponse bufferPopProtected(GlobalState *global);
 
 int setSystemStatus(GlobalState *global, status_code s);
 
