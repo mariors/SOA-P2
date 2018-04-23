@@ -9,7 +9,7 @@
 void bufferPrint(Buffer *pBuffer){
 	printf("Elementos: ");
 	for (int i = 0; i < pBuffer->size; ++i){
-		printf("[%d]",pBuffer->index[i].id);
+		printf("[%d]",pBuffer->index[i].key);
 	}
 	printf("\n");
 }
