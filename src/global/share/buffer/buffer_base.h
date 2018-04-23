@@ -10,6 +10,8 @@
 
 struct MessageStruct{
 	int id;
+	int key;
+	char time[40];
 };
 
 typedef struct MessageStruct Message;
@@ -24,7 +26,9 @@ typedef struct BufferStruct{
 
 } Buffer;
 
+Message createNewMessage(int id, int key);
 
+void printMessage(Message message);
 
 void bufferPrint(Buffer *pBuffer);
 

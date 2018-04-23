@@ -1,5 +1,11 @@
 #include "buffer_base.h"
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+
+
 void bufferPrint(Buffer *pBuffer){
 	printf("Elementos: ");
 	for (int i = 0; i < pBuffer->size; ++i){
@@ -53,4 +59,25 @@ Message bufferPop(Buffer *pBuffer){
 	pBuffer->total--;
 	pBuffer->initial = (pBuffer->initial+1)%pBuffer->size;
 	return element;
+}
+
+
+Message createNewMessage(int id, int key){
+	Message msg1;
+	msg1.id = id;
+	msg1.key = key;
+
+	time_t mytime = time(NULL);
+	char * time_str = ctime(&mytime);
+	time_str[strlen(time_str)-1] = '\0';
+	strncpy(msg1.time,time_str,strlen(time_str)-1);
+	
+	return msg1;
+}
+
+void printMessage(Message message){
+	printf("Message\n");
+	printf("ID: %d\n",message.id);
+	printf("Key: %d\n",message.key);
+	printf("Current Time: %s\n", message.time);
 }
