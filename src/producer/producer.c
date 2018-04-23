@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <unistd.h>
 
 #include "../global/protected_global.h"
 #include "../global/time/exponential.h"
@@ -9,6 +10,18 @@
 //Returns random element between 0 and 4
 int random_element() {
 	return rand() % 5;
+}
+
+void printAction(int pid, int internal_id, int idx, int producers, int consumers){
+
+	printf("\nProducer PID: %d\nProducer internal ID: %d\nMessage read from index: %d\nProducers alive: %d\nConsumers alive: %d\n", pid, internal_id, idx, producers, consumers);
+
+}
+
+void printShutdown(int pid, int internal_id, int msgs, double acc_waiting_time, double acc_blocked_time){
+
+	printf("\nProducer PID: %d\nProducer internal ID: %d\nTotal messages read: %d\nAccumulated time waiting: %d\nAccumulated time blocked: %d\n\nSHUTING DOWN...\n", pid, internal_id, msgs, acc_waiting_time, acc_blocked_time);
+
 }
 
 int main(int argc, char **argv){
@@ -19,6 +32,12 @@ int main(int argc, char **argv){
 
 	const char * name = argv[1];
 	double lambda = atof(argv[2]);
+
+	int pid = getpid();
+
+	double acc_waiting_time = 0;
+	double acc_blocked_time = 0;
+	int msgs = 0;
 
 	printf("PRODUCER: Iniciando\n");
 	printf("PRODUCER: Share Memory: %s\n",name);
@@ -33,21 +52,36 @@ int main(int argc, char **argv){
 	}else{
 		printf("PRODUCER:GlobalState Open\n");
 		printGlobalState(global);
+
+		printf("*** REGISTERING PRODUCER TO SHARED BUFFER ON %s *** \n", name);
+
 		int uid = registerProducerProtected(global);
 		printf("PRODUCER: Register Producer with id: %d\n", uid);
 
 		printf("PRODUCER: Entering to loop\n");
+
+		int read_idx = 0;
+
 		while(1){
-			wait_on_exponential_dist(lambda);
+			acc_waiting_time += wait_on_exponential_dist(lambda);
 			Message m = createNewMessage(uid,random_element());
-			printf("PRODUCER: Pushing message to queue: %d\n", m.id);
+			printf("PRODUCER: Pushing message to queue...\n");
 			printMessage(m);
 			int p = bufferPushProtected(global,m);
 			if(p==-1){
 				printf("ERROR: Buffer is FULL imposible to insert new element\n");
+			}else{
+				msgs++;
 			}
-			printGlobalState(global);
+			printAction(pid, uid, read_idx, global->producer.total, global->consumer.total);
 		}
+
+		printf("*** UNREGISTERING PRODUCER TO SHARED BUFFER ON %s *** \n", name);
+
+		unregisterProducerProtected(global);
+
+		printShutdown(pid, uid, msgs, acc_waiting_time, acc_blocked_time);
+
 	}
 	return 0;
 }

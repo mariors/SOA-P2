@@ -65,13 +65,14 @@ int main(int argc, char **argv){
 	int read_idx = 0;
 
 	while(1){
+		acc_waiting_time += wait_on_exponential_dist(lambda);
+		printf("CONSUMER: Reading message from queue...\n");
 		Message m = bufferPopProtected(global);
 		printAction(pid, internal_id, read_idx, global->producer.total, global->consumer.total);
 		msgs++;
 		if(m.key == -1 || m.key == mod_5){
 			break;		
 		}
-		acc_waiting_time += wait_on_exponential_dist(lambda);
 	}
 
 	printf("*** UNREGISTERING CONSUMER TO SHARED BUFFER ON %s *** \n", name);
