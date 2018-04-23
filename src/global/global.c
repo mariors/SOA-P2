@@ -38,7 +38,10 @@ int getGlobalState(const char *name, GlobalState **global){
 		};
 		(*global)->buffer = BufferDefault;
 		//(*global)->buffer.mutex = (sem_t*)sem_open("/mutex",S_IRWXU|S_IRWXG|S_IRWXO,1);
-		sem_init(&(*global)->buffer.mutex, 0, 1);
+		sem_init(&((*global)->buffer.mutex), 0, 1);
+		sem_init(&((*global)->mutex_consumer), 0, 1);
+		sem_init(&((*global)->mutex_producer), 0, 1);
+		sem_t *sem = sem_open("/semaphore", O_CREAT, 0644, 0);
 	}
 
 	return 1;

@@ -10,19 +10,34 @@ void deleteGlobalStateProtected(const char *name){
 }
 
 int registerProducerProtected(GlobalState *global){
-	return registerProducer(global);
+	//printf("Register");
+	sem_t *sem = sem_open("/semaphore", 0);
+	sem_wait(sem);
+	//printf("Registering");
+	int res = registerProducer(global);
+	sem_post(sem);
+	//printf("Done");
+	return res;
 }
 
 void unregisterProducerProtected(GlobalState *global){
+	sem_wait(&global->mutex_producer);
 	unregisterProducer(global);
+	sem_post(&global->mutex_producer);
 }
 
 int registerConsumerProtected(GlobalState *global){
-	return registerConsumer(global);
+	sem_wait(&global->mutex_consumer);
+	int res = registerConsumer(global);
+	sem_post(&global->mutex_consumer);
+	return res;
 }
 
 void unregisterConsumerProtected(GlobalState *global){
+	sem_wait(&global->mutex_consumer);
 	unregisterConsumer(global);
+	sem_post(&global->mutex_consumer);
+
 }
 
 int bufferPushProtected(GlobalState *global,Message element){
