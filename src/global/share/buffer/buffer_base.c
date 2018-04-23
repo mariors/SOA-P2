@@ -1,5 +1,3 @@
-#include <stdio.h>
-
 #include "buffer_base.h"
 
 void bufferPrint(Buffer *pBuffer){

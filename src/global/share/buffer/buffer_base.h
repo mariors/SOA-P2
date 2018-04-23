@@ -1,6 +1,11 @@
 #ifndef BUFFER_BASE_H
 #define BUFFER_BASE_H
 
+#include <stdio.h>
+#include <semaphore.h>
+#include<sys/stat.h>
+#include<fcntl.h>
+
 #define BUFFER_SIZE 10
 
 struct MessageStruct{
@@ -14,7 +19,9 @@ typedef struct BufferStruct{
 	int initial;
 	int final;
 	int total;
+	sem_t* mutex;
 	Message index[BUFFER_SIZE];
+
 } Buffer;
 
 

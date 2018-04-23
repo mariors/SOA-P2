@@ -4,7 +4,7 @@ HEADERS = -Iinclude/
 LIBS_FOLDER_FLAG = -Llib/
 LIBS_FLAG = 
 
-C_FLAGS = -Wall -lm -Os -lrt $(HEADERS) \
+C_FLAGS = -Wall -lm -Os -lrt -pthread $(HEADERS) \
 	$(LIBS_FOLDER_FLAG) \
 	$(LIBS_FLAG)
 
@@ -25,10 +25,13 @@ compile: clean
 	$(MK_DIR) $(BIN_DIR)
 	$(CC) $(SRC) $(C_FLAGS) -o $(OBJ)
 creator: src/creator.c
+	$(MK_DIR) $(BIN_DIR)
 	$(CC) $(wildcard $(SRC_DIR)/global/**/*.c) $(wildcard $(SRC_DIR)/global/**/**/*.c) src/global/*.c src/protected_global.c src/creator.c  $(C_FLAGS) -o bin/creator.o
 consumer: src/consumer.c
+	$(MK_DIR) $(BIN_DIR)
 	$(CC) $(wildcard $(SRC_DIR)/global/**/*.c) $(wildcard $(SRC_DIR)/global/**/**/*.c) src/global/*.c src/protected_global.c src/consumer.c  $(C_FLAGS) -o bin/consumer.o
 producer: src/producer.c
+	$(MK_DIR) $(BIN_DIR)
 	$(CC) $(wildcard $(SRC_DIR)/global/**/*.c) $(wildcard $(SRC_DIR)/global/**/**/*.c) src/global/*.c src/protected_global.c src/producer.c  $(C_FLAGS) -o bin/producer.o
 clean:
 	@echo CLEANING STEP!

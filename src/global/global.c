@@ -39,6 +39,7 @@ int getGlobalState(const char *name, GlobalState **global){
 				0
 		};
 		(*global)->buffer = BufferDefault;
+		(*global)->buffer.mutex = (sem_t*)sem_open("/mutex",S_IRWXU|S_IRWXG|S_IRWXO,1);
 	}
 
 	return 1;
