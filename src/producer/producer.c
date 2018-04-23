@@ -85,6 +85,7 @@ int main(int argc, char **argv){
 		printShutdown(pid, uid, msgs, acc_waiting_time, acc_blocked_time);
 
 	}
+	printGlobalState(global);
 	return 0;
 }
 

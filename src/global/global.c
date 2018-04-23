@@ -38,7 +38,17 @@ int getGlobalState(const char *name, GlobalState **global){
 		};
 		(*global)->buffer = BufferDefault;
 		//(*global)->buffer.mutex = (sem_t*)sem_open("/mutex",S_IRWXU|S_IRWXG|S_IRWXO,1);
-		sem_init(&(*global)->buffer.mutex, 0, 1);
+		(*global)->producer.total = 0;
+		(*global)->producer.unique = 0;
+
+		sem_t *semBuf = sem_open("/semaphoreBuffer", O_RDWR | O_CREAT , S_IRUSR | S_IWUSR, 1);
+		sem_t *semProducer = sem_open("/semaphoreProducer", O_RDWR | O_CREAT , S_IRUSR | S_IWUSR, 1); 	
+		sem_t *semConsumer = sem_open("/semaphoreConsumer", O_RDWR | O_CREAT , S_IRUSR | S_IWUSR, 1); 	
+ 	
+		//sem_init(sem, 0, 1);
+
+		//sem_unlink("/semaphore");
+
 	}
 
 	return 1;

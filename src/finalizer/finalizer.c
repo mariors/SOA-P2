@@ -25,7 +25,7 @@ int main(int argc, char** argv) {
 	//Set finalizing flag..
 	printf("Finalizer: Setting producer flag to DEAD\n");
 	setSystemStatus(global, DEAD);
-
+	while(global->producer.total > 0);
 	while(global->consumer.total > 0) {
 		printf("Finalizer: Sending kill message to buffer\n");
 		Message killMessage = createNewMessage(-1,-1);
@@ -34,6 +34,9 @@ int main(int argc, char** argv) {
 	}
 	printf("\n\n*****************\n");
 	printf("Finalizer: Done");
+	deleteGlobalStateProtected(name);
+	
+
 
 	printf("Number of active producers at finalization time: %d\n", producers);
 	printf("Number of active consumers at finalization time: %d\n", consumers);

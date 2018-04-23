@@ -10,8 +10,8 @@ typedef enum status_code {
 } status_code;
 
 typedef struct Integer{
-    int total;
-    int unique;
+    volatile int total;
+    volatile int unique;
 } Integer;
 
 struct GlobalStateStruct{
